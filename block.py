@@ -48,6 +48,18 @@ class Block:
             len(self.data)
         )
         return packed_fixed + self.data
+    
+    def create_genesis_block() -> Block:
+        return Block(
+            prev_hash=b'\0' * 32,
+            timestamp=0.0,
+            case_id=b"0" * 32,
+            item_id=b"0" * 32,
+            state=b"INITIAL",
+            creator=b'\0' * 12,
+            owner=b'\0' * 12,
+            data="Initial block\0"
+        )
 
     @classmethod
     def from_bytes(cls, block_bytes: bytes):
