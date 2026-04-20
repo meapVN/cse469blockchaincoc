@@ -1,8 +1,10 @@
+from __future__ import annotations
 import struct
 import hashlib
 import time
 import os
 from Crypto.Cipher import AES   # pip install pycryptodome if needed
+
 
 AES_KEY = b"R0chLi4uLi4uLi4="
 
@@ -48,18 +50,6 @@ class Block:
             len(self.data)
         )
         return packed_fixed + self.data
-    
-    def create_genesis_block() -> Block:
-        return Block(
-            prev_hash=b'\0' * 32,
-            timestamp=0.0,
-            case_id=b"0" * 32,
-            item_id=b"0" * 32,
-            state=b"INITIAL",
-            creator=b'\0' * 12,
-            owner=b'\0' * 12,
-            data="Initial block\0"
-        )
 
     @classmethod
     def from_bytes(cls, block_bytes: bytes):
@@ -87,3 +77,15 @@ class Block:
     def calculate_block_hash(self) -> bytes:
         """This is what you put in the NEXT block's prev_hash field."""
         return hashlib.sha256(self.to_bytes()).digest()
+    
+def create_genesis_block() -> Block:
+        return Block(
+            prev_hash=b'\0' * 32,
+            timestamp=0.0,
+            case_id=b"0" * 32,
+            item_id=b"0" * 32,
+            state=b"INITIAL",
+            creator=b'\0' * 12,
+            owner=b'\0' * 12,
+            data="Initial block\0"
+        )
